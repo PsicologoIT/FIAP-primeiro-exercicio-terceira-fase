@@ -1,0 +1,42 @@
+-- Criação da tabela de contatos
+CREATE TABLE Contatos (
+    contato_id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    sobrenome VARCHAR(100),
+    telefone VARCHAR(15),
+    email VARCHAR(100),
+    endereco VARCHAR(255),
+    data_nascimento DATE
+);
+
+-- Criação da tabela de grupos (para categorizar contatos)
+CREATE TABLE Grupos (
+    grupo_id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_grupo VARCHAR(100) NOT NULL
+);
+
+-- Criação da tabela de relacionamento entre contatos e grupos
+CREATE TABLE Contatos_Grupos (
+    contato_id INT,
+    grupo_id INT,
+    PRIMARY KEY (contato_id, grupo_id),
+    FOREIGN KEY (contato_id) REFERENCES Contatos(contato_id),
+    FOREIGN KEY (grupo_id) REFERENCES Grupos(grupo_id)
+);
+
+-- Inserindo dados de exemplo
+INSERT INTO Contatos (nome, sobrenome, telefone, email, endereco, data_nascimento)
+VALUES 
+('João', 'Paulo', '123456789', 'joao.paulo@example.com', 'Rua X, 123', '1990-06-15');
+
+INSERT INTO Grupos (nome_grupo) VALUES ('Amigos');
+INSERT INTO Grupos (nome_grupo) VALUES ('Família');
+
+-- Associar João a um grupo
+INSERT INTO Contatos_Grupos (contato_id, grupo_id) VALUES (1, 1); -- João em 'Amigos'
+
+-- Consultar os dados inseridos
+SELECT * FROM Contatos;
+SELECT * FROM Grupos;
+SELECT * FROM Contatos_Grupos;
+
